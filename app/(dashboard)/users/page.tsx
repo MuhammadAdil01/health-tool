@@ -1,5 +1,5 @@
 import { PageHeader } from '@/components/ui/PageHeader'
-import { Badge } from '@/components/ui/Badge'
+import { Badge } from '@/components/ui/badge'
 import { Search, UserPlus, MoreHorizontal } from 'lucide-react'
 
 const users = [
@@ -18,16 +18,16 @@ const avatarColors = [
   'bg-rose-500',  'bg-cyan-500',   'bg-orange-500',  'bg-pink-500',
 ]
 
-const statusVariant: Record<string, 'success' | 'neutral' | 'danger'> = {
+const statusVariant: Record<string, 'success' | 'secondary' | 'destructive'> = {
   Active:    'success',
-  Inactive:  'neutral',
-  Suspended: 'danger',
+  Inactive:  'secondary',
+  Suspended: 'destructive',
 }
 
-const roleVariant: Record<string, 'info' | 'warning' | 'neutral'> = {
+const roleVariant: Record<string, 'info' | 'warning' | 'secondary'> = {
   Admin:  'info',
   Editor: 'warning',
-  Viewer: 'neutral',
+  Viewer: 'secondary',
 }
 
 export default function UsersPage() {

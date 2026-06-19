@@ -1,147 +1,125 @@
-import { Users, DollarSign, Activity, TrendingUp, Download, Plus } from 'lucide-react'
-import { StatCard } from '@/components/ui/StatCard'
-import { PageHeader } from '@/components/ui/PageHeader'
-import { Badge } from '@/components/ui/Badge'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+import { AuditTrendChart } from '@/components/charts/AuditTrendChart'
+import { ScoreDistributionChart } from '@/components/charts/ScoreDistributionChart'
 
-const chartBars = [42, 68, 55, 78, 60, 88, 72, 95, 65, 84, 73, 91]
-const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+/* ─── Static data ─────────────────────────────────────────── */
 
-const recentActivity = [
-  { initials: 'JD', color: 'bg-blue-500',    message: 'John Doe created a new account',         time: '2 minutes ago' },
-  { initials: 'SA', color: 'bg-violet-500',  message: 'Sarah A. updated her profile settings',  time: '15 minutes ago' },
-  { initials: 'MK', color: 'bg-emerald-500', message: 'Mike Kim completed a purchase of $249',  time: '1 hour ago' },
-  { initials: 'RP', color: 'bg-amber-500',   message: 'Rachel Patel submitted a monthly report', time: '3 hours ago' },
-  { initials: 'TC', color: 'bg-rose-500',    message: 'Tom Chen raised a support ticket #482',  time: '5 hours ago' },
+const stats = [
+  { title: 'Total Audits',       value: '1,248',  change: '+12.5% this month' },
+  { title: 'Total Users',        value: '532',    change: '+8.3% this month'  },
+  { title: 'Reports Generated',  value: '1,102',  change: '+15.1% this month' },
+  { title: 'Credits Used',       value: '24,860', change: '+18.7% this month' },
 ]
 
-const transactions = [
-  { name: 'Stripe Payment',       id: '#TXN-4821', status: 'Completed', date: 'Jun 18, 2026', amount: '+$2,400.00' },
-  { name: 'Subscription Renewal', id: '#TXN-4820', status: 'Completed', date: 'Jun 17, 2026', amount: '+$799.00'   },
-  { name: 'Refund Request',       id: '#TXN-4819', status: 'Pending',   date: 'Jun 17, 2026', amount: '-$150.00'   },
-  { name: 'Enterprise License',   id: '#TXN-4818', status: 'Completed', date: 'Jun 16, 2026', amount: '+$4,999.00' },
-  { name: 'Failed Payment',       id: '#TXN-4817', status: 'Failed',    date: 'Jun 16, 2026', amount: '$329.00'    },
+const recentAudits = [
+  { website: 'acmestyle.com',   type: 'Full Audit',     score: '82/100', status: 'Completed', date: 'May 12, 2024 10:30 AM' },
+  { website: 'myblog.com',      type: 'SEO Audit',      score: '66/100', status: 'Completed', date: 'May 12, 2024 09:15 AM' },
+  { website: 'shop.com',        type: 'Full Audit',     score: '91/100', status: 'Completed', date: 'May 11, 2024 11:30 PM' },
+  { website: 'techvista.io',    type: 'Performance',    score: '74/100', status: 'Completed', date: 'May 11, 2024 08:45 PM' },
+  { website: 'newsportal.com',  type: 'Security Audit', score: '48/100', status: 'Completed', date: 'May 11, 2024 07:10 PM' },
 ]
 
-const statusVariant: Record<string, 'success' | 'warning' | 'danger'> = {
-  Completed: 'success',
-  Pending:   'warning',
-  Failed:    'danger',
-}
+/* ─── Page ────────────────────────────────────────────────── */
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-6">
-      <PageHeader
-        title="Dashboard"
-        subtitle="Welcome back! Here's what's happening with your platform today."
-        actions={
-          <>
-            <button className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-sm font-medium text-slate-600 shadow-sm hover:bg-slate-50 transition-colors">
-              <Download size={14} />
-              Export
-            </button>
-            <button className="flex items-center gap-1.5 rounded-lg bg-blue-600 px-3.5 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 transition-colors">
-              <Plus size={14} />
-              New Report
-            </button>
-          </>
-        }
-      />
+    <div className="space-y-5">
+      {/* Page heading */}
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900">Dashboard</h1>
+        <p className="mt-1 text-sm text-gray-500">Welcome back, Admin 👋</p>
+      </div>
 
-      {/* Stats */}
+      {/* Stat cards */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard title="Total Users"       value="12,847" change="+12.5%" changeType="positive" icon={Users}       color="blue"    />
-        <StatCard title="Monthly Revenue"   value="$48,295" change="+8.2%"  changeType="positive" icon={DollarSign}  color="emerald" />
-        <StatCard title="Active Sessions"   value="3,241"  change="+2.1%"  changeType="positive" icon={Activity}    color="violet"  />
-        <StatCard title="Growth Rate"       value="24.8%"  change="-1.4%"  changeType="negative" icon={TrendingUp}  color="amber"   />
+        {stats.map((s) => (
+          <Card key={s.title} className="rounded-xl border border-gray-200 bg-white shadow-none ring-0">
+            <CardContent className="p-5">
+              <p className="text-sm text-gray-500">{s.title}</p>
+              <p className="mt-1.5 text-3xl font-bold text-gray-900">{s.value}</p>
+              <p className="mt-1.5 text-sm font-medium text-green-600">{s.change}</p>
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
-      {/* Chart + Activity */}
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-        {/* Revenue chart */}
-        <div className="lg:col-span-2 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="mb-5 flex items-center justify-between">
-            <div>
-              <h3 className="font-semibold text-slate-800">Revenue Overview</h3>
-              <p className="text-sm text-slate-400">Monthly revenue for 2026</p>
-            </div>
-            <div className="flex items-center gap-3 text-xs text-slate-500">
-              <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-blue-500 inline-block" />Revenue</span>
-            </div>
-          </div>
-          <div className="flex h-52 items-end gap-1.5">
-            {chartBars.map((h, i) => (
-              <div key={i} className="group flex flex-1 flex-col items-center gap-1">
-                <div
-                  className="w-full rounded-t-sm bg-blue-500/80 hover:bg-blue-600 transition-colors cursor-pointer"
-                  style={{ height: `${h}%` }}
-                  title={`${months[i]}: $${(h * 520).toLocaleString()}`}
-                />
-              </div>
-            ))}
-          </div>
-          <div className="mt-2 flex justify-between text-[10px] text-slate-400">
-            {months.map((m) => <span key={m}>{m}</span>)}
-          </div>
-        </div>
-
-        {/* Activity feed */}
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 className="mb-4 font-semibold text-slate-800">Recent Activity</h3>
-          <div className="space-y-4">
-            {recentActivity.map((a, i) => (
-              <div key={i} className="flex items-start gap-3">
-                <div className={`mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold text-white ${a.color}`}>
-                  {a.initials}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="text-sm leading-snug text-slate-700">{a.message}</p>
-                  <p className="mt-0.5 text-xs text-slate-400">{a.time}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Transactions table */}
-      <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
-        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
-          <div>
-            <h3 className="font-semibold text-slate-800">Recent Transactions</h3>
-            <p className="text-sm text-slate-400">Latest 5 payment activities</p>
-          </div>
-          <button className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
-            View all →
-          </button>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-slate-100 bg-slate-50/50">
-                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Transaction</th>
-                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Status</th>
-                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Date</th>
-                <th className="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wide text-slate-500">Amount</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-50">
-              {transactions.map((tx) => (
-                <tr key={tx.id} className="hover:bg-slate-50/70 transition-colors">
-                  <td className="px-5 py-3.5">
-                    <p className="font-medium text-slate-700">{tx.name}</p>
-                    <p className="text-xs text-slate-400">{tx.id}</p>
-                  </td>
-                  <td className="px-5 py-3.5">
-                    <Badge variant={statusVariant[tx.status]}>{tx.status}</Badge>
-                  </td>
-                  <td className="px-5 py-3.5 text-slate-500">{tx.date}</td>
-                  <td className="px-5 py-3.5 text-right font-semibold text-slate-700">{tx.amount}</td>
-                </tr>
+      {/* Recent Audits */}
+      <Card className="rounded-xl border border-gray-200 bg-white shadow-none ring-0">
+        <CardHeader className="flex flex-row items-center justify-between px-5 pb-0 pt-4">
+          <h2 className="text-base font-semibold text-gray-900">Recent Audits</h2>
+          <Button
+            variant="outline"
+            className="h-8 rounded-lg border-gray-200 px-3 text-xs font-medium text-gray-600 hover:bg-gray-50"
+          >
+            View all
+          </Button>
+        </CardHeader>
+        <CardContent className="px-0 pb-0 pt-3">
+          <Table>
+            <TableHeader>
+              <TableRow className="border-gray-100 hover:bg-transparent">
+                <TableHead className="pl-5 text-xs font-semibold text-gray-500">Website</TableHead>
+                <TableHead className="text-xs font-semibold text-gray-500">Audit Type</TableHead>
+                <TableHead className="text-xs font-semibold text-gray-500">Score</TableHead>
+                <TableHead className="text-xs font-semibold text-gray-500">Status</TableHead>
+                <TableHead className="pr-5 text-xs font-semibold text-gray-500">Date</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {recentAudits.map((audit) => (
+                <TableRow
+                  key={audit.website}
+                  className="border-gray-100 hover:bg-gray-50/60 transition-colors"
+                >
+                  <TableCell className="pl-5 py-3 font-medium text-gray-800">
+                    {audit.website}
+                  </TableCell>
+                  <TableCell className="py-3 text-gray-600">{audit.type}</TableCell>
+                  <TableCell className="py-3 text-gray-700">{audit.score}</TableCell>
+                  <TableCell className="py-3">
+                    <Badge variant="success" className="rounded-full px-2.5 py-0.5 text-xs font-medium">
+                      {audit.status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="pr-5 py-3 text-gray-500 text-sm">{audit.date}</TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+
+      {/* Charts row */}
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        {/* Audit Trend */}
+        <Card className="rounded-xl border border-gray-200 bg-white shadow-none ring-0">
+          <CardHeader className="px-5 pb-0 pt-4">
+            <h2 className="text-base font-semibold text-gray-900">Audit Trend (Last 7 Days)</h2>
+          </CardHeader>
+          <CardContent className="px-2 pb-4 pt-3">
+            <AuditTrendChart />
+          </CardContent>
+        </Card>
+
+        {/* Score Distribution */}
+        <Card className="rounded-xl border border-gray-200 bg-white shadow-none ring-0">
+          <CardHeader className="px-5 pb-0 pt-4">
+            <h2 className="text-base font-semibold text-gray-900">Top Score Distribution</h2>
+          </CardHeader>
+          <CardContent className="flex items-center justify-center px-5 pb-4 pt-3">
+            <ScoreDistributionChart />
+          </CardContent>
+        </Card>
       </div>
     </div>
   )

@@ -1,5 +1,5 @@
 import { PageHeader } from '@/components/ui/PageHeader'
-import { Badge } from '@/components/ui/Badge'
+import { Badge } from '@/components/ui/badge'
 import { Zap, Globe, Clock, CheckCircle } from 'lucide-react'
 
 const trafficSources = [
@@ -23,10 +23,10 @@ const recentOrders = [
   { id: '#ORD-9017', customer: 'David Park',     product: 'Add-on Bundle',   status: 'Failed',    value: '$79',   date: 'Jun 16' },
 ]
 
-const statusVariant: Record<string, 'success' | 'warning' | 'danger'> = {
+const statusVariant: Record<string, 'success' | 'warning' | 'destructive'> = {
   Completed: 'success',
   Pending:   'warning',
-  Failed:    'danger',
+  Failed:    'destructive',
 }
 
 const highlights = [

@@ -1,5 +1,5 @@
 import { PageHeader } from '@/components/ui/PageHeader'
-import { Badge } from '@/components/ui/Badge'
+import { Badge } from '@/components/ui/badge'
 import { Download, Plus, FileText, BarChart2, Users, DollarSign } from 'lucide-react'
 
 const reports = [
@@ -77,10 +77,10 @@ const reports = [
   },
 ]
 
-const statusVariant: Record<string, 'success' | 'warning' | 'neutral'> = {
+const statusVariant: Record<string, 'success' | 'warning' | 'secondary'> = {
   Ready:      'success',
   Processing: 'warning',
-  Pending:    'neutral',
+  Pending:    'secondary',
 }
 
 export default function ReportsPage() {
