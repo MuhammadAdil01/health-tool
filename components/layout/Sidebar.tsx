@@ -36,7 +36,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
               <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
             </svg>
           </div>
-          <span className="text-[15px] font-bold tracking-tight text-white">SiteAudit</span>
+          <span className="text-[17px] font-bold tracking-tight text-white">SiteAudit</span>
           <button
             onClick={onClose}
             className="ml-auto rounded p-1 text-slate-400 hover:bg-white/10 hover:text-white transition-colors lg:hidden"
